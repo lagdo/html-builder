@@ -81,11 +81,13 @@ class HtmlComponent extends Component
     /**
      * @param array<Element> $children
      *
-     * @return HtmlElement
+     * @return array<HtmlElement>
      */
-    public function makeElement(array $children): HtmlElement
+    public function build(array $children): array
     {
-        return $this->element()->addChildren($children);
+        return [
+            $this->element()->addChildren($children),
+        ];
     }
 
     /**

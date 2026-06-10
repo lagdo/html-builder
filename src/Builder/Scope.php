@@ -21,23 +21,20 @@ use Lagdo\UiBuilder\Html\HtmlComponent;
 use function is_a;
 use function implode;
 
+/**
+ * @template C = HtmlComponent
+ */
 class Scope
 {
     /**
      * @var array<Element>
      */
-    protected $elements = [];
+    protected array $elements = [];
 
     /**
-     * @var array<Element|HtmlComponent>
+     * @var array<Element|C>
      */
-    protected $children = [];
-
-    /**
-     * @param HtmlComponent $parent
-     */
-    public function __construct(protected HtmlComponent $parent)
-    {}
+    protected array $children = [];
 
     /**
      * Create the corresponding components
@@ -79,12 +76,15 @@ class Scope
                 continue;
             }
 
-            $scope = new Scope($component);
+            $scope = new Scope();
             // Recursively build the component children.
             $scope->build($component->children());
 
             // Add the child component element to the scope elements.
-            $this->elements[] = $component->makeElement($scope->elements);
+            $this->elements = [
+                ...$this->elements,
+                ...$component->build($scope->elements),
+            ];
         }
     }
 

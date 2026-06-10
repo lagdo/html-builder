@@ -23,8 +23,9 @@ use LogicException;
 
 use function preg_replace;
 use function strlen;
-use function substr;
+use function strncmp;
 use function strtolower;
+use function substr;
 
 class Engine
 {
@@ -120,10 +121,11 @@ class Engine
      */
     public function callBuilderHelper(string $method, array $arguments): HtmlComponent|Element
     {
-        $methodTagName = $this->getTagName($method);
+        $tagName = $this->getTagName($method);
         foreach($this->helpers[HelperTarget::BUILDER->value] as $prefix => $helper) {
-            $tagName = substr($methodTagName, strlen($prefix) + 1);
-            if ($tagName === "$prefix-") {
+            $prefixLength = strlen($prefix) + 1;
+            if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
+                $tagName = substr($tagName, $prefixLength);
                 return $helper($tagName, $method, $arguments);
             }
         }
@@ -142,10 +144,11 @@ class Engine
     public function callElementHelper(HtmlElement $element,
         string $method, array $arguments): HtmlElement
     {
-        $methodTagName = $this->getTagName($method);
+        $tagName = $this->getTagName($method);
         foreach($this->helpers[HelperTarget::ELEMENT->value] as $prefix => $helper) {
-            $tagName = substr($methodTagName, strlen($prefix) + 1);
-            if ($tagName === "$prefix-") {
+            $prefixLength = strlen($prefix) + 1;
+            if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
+                $tagName = substr($tagName, $prefixLength);
                 return $helper($element, $tagName, $method, $arguments);
             }
         }
@@ -164,10 +167,11 @@ class Engine
     public function callComponentHelper(HtmlComponent $component,
         string $method, array $arguments): HtmlComponent
     {
-        $methodTagName = $this->getTagName($method);
+        $tagName = $this->getTagName($method);
         foreach($this->helpers[HelperTarget::COMPONENT->value] as $prefix => $helper) {
-            $tagName = substr($methodTagName, strlen($prefix) + 1);
-            if ($tagName === "$prefix-") {
+            $prefixLength = strlen($prefix) + 1;
+            if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
+                $tagName = substr($tagName, $prefixLength);
                 return $helper($component, $tagName, $method, $arguments);
             }
         }
@@ -182,8 +186,7 @@ class Engine
      */
     public function build(array $arguments): string
     {
-        // The "root" component below will not be printed.
-        $scope = new Scope($this->builder->createComponent('root'));
+        $scope = new Scope();
         $scope->build($arguments);
 
         return $scope->html();

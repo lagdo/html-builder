@@ -26,12 +26,20 @@ use Lagdo\UiBuilder\Html\Element\Html;
 use Lagdo\UiBuilder\Html\Element\Text;
 use Closure;
 
+/**
+ * @template C = HtmlComponent
+ */
 class HtmlBuilder
 {
     /**
      * @var Engine
      */
-    private $engine;
+    protected Engine $engine;
+
+    /**
+     * @var string
+     */
+    protected static string $componentClass = HtmlComponent::class;
 
     /**
      * The constructor
@@ -60,7 +68,7 @@ class HtmlBuilder
      */
     public function registerBuilderHelper(string $prefix, Closure $helper): void
     {
-        $this->registerBuilderHelper($prefix, $helper);
+        $this->engine->registerBuilderHelper($prefix, $helper);
     }
 
     /**
@@ -71,7 +79,7 @@ class HtmlBuilder
      */
     public function registerElementHelper(string $prefix, Closure $helper): void
     {
-        $this->registerElementHelper($prefix, $helper);
+        $this->engine->registerElementHelper($prefix, $helper);
     }
 
     /**
@@ -82,27 +90,30 @@ class HtmlBuilder
      */
     public function registerComponentHelper(string $prefix, Closure $helper): void
     {
-        $this->registerComponentHelper($prefix, $helper);
+        $this->engine->registerComponentHelper($prefix, $helper);
     }
 
     /**
-     * @template T of HtmlComponent
+     * @template T of C
      * @param array $arguments
      * @param string $tagName
-     * @psalm-param class-string<T> $class
+     * @psalm-param class-string<T>|null $class
      *
      * @return T
      */
     private function _createComponent(array $arguments,
-        string $tagName = '', string $class = HtmlComponent::class): mixed
+        string $tagName = '', string|null $class = null): mixed
     {
-        return new $class($this->engine, $tagName, $arguments);
+        $componentClass = $class ?? static::$componentClass;
+        return new $componentClass($this->engine, $tagName, $arguments);
     }
 
     /**
-     * @inheritDoc
+     * @param string $tagName
+     *
+     * @return C
      */
-    public function tag(string $tagName, ...$arguments): HtmlComponent
+    public function tag(string $tagName, ...$arguments): mixed
     {
         return $this->_createComponent($arguments, tagName: $tagName);
     }
@@ -111,27 +122,30 @@ class HtmlBuilder
      * @param string $tagName
      * @param array $arguments
      *
-     * @return HtmlComponent
+     * @return C
      */
-    public function createComponent(string $tagName, array $arguments = []): HtmlComponent
+    public function createComponent(string $tagName, array $arguments = []): mixed
     {
         return $this->_createComponent($arguments, tagName: $tagName);
     }
 
     /**
-     * @template T of HtmlComponent
+     * @template T of C
      * @psalm-param class-string<T> $class
      * @param array $arguments
      *
      * @return T
      */
-    protected function createComponentOfClass(string $class, array $arguments = []): HtmlComponent
+    protected function createComponentOfClass(string $class, array $arguments = []): mixed
     {
         return $this->_createComponent($arguments, class: $class);
     }
 
     /**
-     * @inheritDoc
+     * @param array $values
+     * @param Closure $closure
+     *
+     * @return Component
      */
     public function each(array $values, Closure $closure): Component
     {
@@ -139,7 +153,7 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @return Component
      */
     public function list(...$arguments): Component
     {
@@ -147,7 +161,10 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @param bool $condition
+     * @param Closure $closure
+     *
+     * @return Component
      */
     public function when(bool $condition, Closure $closure): Component
     {
@@ -155,7 +172,7 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @return Component
      */
     public function pick(...$arguments): Component
     {
@@ -163,7 +180,9 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @param string $text
+     *
+     * @return Element
      */
     public function text(string $text): Element
     {
@@ -171,7 +190,9 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @param string $html
+     *
+     * @return Element
      */
     public function html(string $html): Element
     {
@@ -179,7 +200,9 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @param string $comment
+     *
+     * @return Element
      */
     public function comment(string $comment): Element
     {
@@ -187,7 +210,7 @@ class HtmlBuilder
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function build(...$arguments): string
     {
