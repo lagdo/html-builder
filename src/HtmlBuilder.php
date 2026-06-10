@@ -27,7 +27,7 @@ use Lagdo\UiBuilder\Html\Element\Text;
 use Closure;
 
 /**
- * @template C = HtmlComponent
+ * @template C of HtmlComponent = HtmlComponent
  */
 class HtmlBuilder
 {
@@ -101,11 +101,11 @@ class HtmlBuilder
      *
      * @return T
      */
-    private function _createComponent(array $arguments,
+    private function newComponent(array $arguments,
         string $tagName = '', string|null $class = null): mixed
     {
         $componentClass = $class ?? static::$componentClass;
-        return new $componentClass($this->engine, $tagName, $arguments);
+        return (new $componentClass($tagName, $arguments))->_e($this->engine);
     }
 
     /**
@@ -115,7 +115,7 @@ class HtmlBuilder
      */
     public function tag(string $tagName, ...$arguments): mixed
     {
-        return $this->_createComponent($arguments, tagName: $tagName);
+        return $this->newComponent($arguments, tagName: $tagName);
     }
 
     /**
@@ -126,7 +126,7 @@ class HtmlBuilder
      */
     public function createComponent(string $tagName, array $arguments = []): mixed
     {
-        return $this->_createComponent($arguments, tagName: $tagName);
+        return $this->newComponent($arguments, tagName: $tagName);
     }
 
     /**
@@ -138,7 +138,7 @@ class HtmlBuilder
      */
     protected function createComponentOfClass(string $class, array $arguments = []): mixed
     {
-        return $this->_createComponent($arguments, class: $class);
+        return $this->newComponent($arguments, class: $class);
     }
 
     /**

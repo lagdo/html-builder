@@ -38,6 +38,11 @@ use function is_string;
 class HtmlComponent extends Component
 {
     /**
+     * @var Engine
+     */
+    public readonly Engine $engine;
+
+    /**
      * @var HtmlElement
      */
     private HtmlElement $element;
@@ -58,16 +63,28 @@ class HtmlComponent extends Component
     protected string $tagName = '';
 
     /**
-     * @param Engine $engine
      * @param string $tagName
      * @param array $arguments
      */
-    public function __construct(private Engine $engine, string $tagName, array $arguments = [])
+    public function __construct(string $tagName, array $arguments = [])
     {
-        $this->element = new HtmlElement($engine, $tagName ?: $this->tagName);
-
+        $this->element = new HtmlElement($this, $tagName ?: $this->tagName);
         // Resolve arguments
         $this->contents(...$arguments);
+    }
+
+    /**
+     * Set the engine.
+     *
+     * @param Engine $engine
+     *
+     * @return HtmlComponent
+     */
+    public function _e(Engine $engine): static
+    {
+        // $this->engine is readonly, so this method must not be called again.
+        $this->engine = $engine;
+        return $this;
     }
 
     /**

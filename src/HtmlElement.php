@@ -14,7 +14,6 @@
 
 namespace Lagdo\UiBuilder\Html;
 
-use Lagdo\UiBuilder\Html\Builder\Engine;
 use Lagdo\UiBuilder\Html\Element\Element;
 
 use function array_filter;
@@ -77,11 +76,11 @@ class HtmlElement extends Element
     private $children = [];
 
     /**
-     * @param Engine $engine
+     * @param HtmlComponent $component
      * @param string $tag
      * @param array $attributes
      */
-    public function __construct(private Engine $engine,
+    public function __construct(private HtmlComponent $component,
         private string $tag, array $attributes = [])
     {
         $this->setAttributes($attributes);
@@ -95,7 +94,7 @@ class HtmlElement extends Element
      */
     public function __call(string $method, array $arguments): static
     {
-        $this->engine->callElementHelper($this, $method, $arguments);
+        $this->component->engine->callElementHelper($this, $method, $arguments);
         return $this;
     }
 
