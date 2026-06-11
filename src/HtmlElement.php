@@ -43,37 +43,32 @@ class HtmlElement extends Element
     /**
      * @var bool
      */
-    private $isShort = false;
+    private bool $isShort = false;
 
     /**
      * @var bool
      */
-    private $isOpened = false;
+    private bool $isOpened = false;
 
     /**
      * @var array
      */
-    private $attributes = [];
+    private array $attributes = [];
 
     /**
      * @var array
      */
-    private $escapes = [];
+    private array $escapes = [];
 
     /**
      * @var array
      */
-    private $baseClasses = []; // The component classes.
-
-    /**
-     * @var array
-     */
-    private $classes = []; // The additional classes.
+    private array $classes = [];
 
     /**
      * @var array<Element>
      */
-    private $children = [];
+    private array $children = [];
 
     /**
      * @param HtmlComponent $component
@@ -156,29 +151,6 @@ class HtmlElement extends Element
      *
      * @return static
      */
-    public function addBaseClass(string $class): static
-    {
-        $this->baseClasses[] = trim($class);
-        return $this;
-    }
-
-    /**
-     * @param int $index
-     * @param string $class
-     *
-     * @return static
-     */
-    public function setBaseClass(int $index, string $class): static
-    {
-        $this->baseClasses[$index] = trim($class);
-        return $this;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return static
-     */
     public function addClass(string $class): static
     {
         $this->classes[trim($class)] = true;
@@ -219,11 +191,33 @@ class HtmlElement extends Element
     }
 
     /**
+     * Get the classes in the format they are stored.
+     *
+     * @return array
+     */
+    public function getRawClasses(): array
+    {
+        return $this->classes;
+    }
+
+    /**
+     * Set the classes, already in the right format.
+     *
+     * @param array $classes
+     *
+     * @return void
+     */
+    public function setRawClasses(array $classes): void
+    {
+        $this->classes = $classes;
+    }
+
+    /**
      * @param bool $isShort
      *
      * @return static
      */
-    public function setShort($isShort): static
+    public function setShort(bool $isShort): static
     {
         $this->isShort = $isShort;
         return $this;
@@ -234,7 +228,7 @@ class HtmlElement extends Element
      *
      * @return void
      */
-    public function setOpened($isOpened): void
+    public function setOpened(bool $isOpened): void
     {
         $this->isOpened = $isOpened;
     }
@@ -314,7 +308,6 @@ class HtmlElement extends Element
     {
         // Merge the classes.
         $classes = array_keys(array_filter($this->classes, fn($active) => $active === true));
-        $classes = [...$this->baseClasses, ...$classes];
         if (isset($this->attributes['class'])) {
             $classes[] = $this->attributes['class'];
         }
@@ -368,13 +361,13 @@ class HtmlElement extends Element
     }
 
     /**
-     * @param $value
+     * @param string|bool $value
      *
      * @return string
      */
-    private function escape($value): string
+    private function escape(string|bool $value): string
     {
-        return htmlspecialchars($value, ENT_COMPAT);
+        return is_bool($value) ? $value : htmlspecialchars($value, ENT_COMPAT);
     }
 
     /**
