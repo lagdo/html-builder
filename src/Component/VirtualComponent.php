@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * VirtualComponent.php
  *
- * The HTML UI Builder engine.
+ * Base class for virtual UI components.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

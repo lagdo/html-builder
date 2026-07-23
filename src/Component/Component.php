@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * Component.php
  *
- * The HTML UI Builder engine.
+ * Base class for UI components.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

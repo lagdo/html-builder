@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * ListComponent.php
  *
- * The HTML UI Builder engine.
+ * Virtual UI component for a list of components.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

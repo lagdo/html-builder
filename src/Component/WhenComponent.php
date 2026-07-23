@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * WhenComponent.php
  *
- * The HTML UI Builder engine.
+ * Virtual UI component to show a component only if a condition is met.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

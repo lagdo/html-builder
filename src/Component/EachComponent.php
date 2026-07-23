@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * EachComponent.php
  *
- * The HTML UI Builder engine.
+ * Virtual UI component for each loop.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Engine.php
+ * PickComponent.php
  *
- * The HTML UI Builder engine.
+ * Virtual UI component to pick one components among many.
  *
  * @package ui-builder-html
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
