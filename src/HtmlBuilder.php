@@ -18,6 +18,7 @@ use Lagdo\UiBuilder\Html\Builder\Engine;
 use Lagdo\UiBuilder\Html\Component\Component;
 use Lagdo\UiBuilder\Html\Component\EachComponent;
 use Lagdo\UiBuilder\Html\Component\ListComponent;
+use Lagdo\UiBuilder\Html\Component\LoopComponent;
 use Lagdo\UiBuilder\Html\Component\PickComponent;
 use Lagdo\UiBuilder\Html\Component\WhenComponent;
 use Lagdo\UiBuilder\Html\Element\Comment;
@@ -25,6 +26,8 @@ use Lagdo\UiBuilder\Html\Element\Element;
 use Lagdo\UiBuilder\Html\Element\Html;
 use Lagdo\UiBuilder\Html\Element\Text;
 use Closure;
+use Iterator;
+use Generator;
 
 /**
  * @template C of HtmlComponent = HtmlComponent
@@ -177,6 +180,17 @@ class HtmlBuilder
     public function pick(...$arguments): Component
     {
         return new PickComponent($arguments);
+    }
+
+    /**
+     * @param array|Iterator|Generator $values
+     * @param Closure $closure
+     *
+     * @return Component
+     */
+    public function loop(array|Iterator|Generator $values, Closure $closure): Component
+    {
+        return new LoopComponent($values, $closure);
     }
 
     /**
