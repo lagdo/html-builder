@@ -16,17 +16,17 @@ namespace Lagdo\UiBuilder\Html\Component;
 
 use Lagdo\UiBuilder\Html\Element\Element;
 use Closure;
-
-use function array_keys;
-use function array_map;
+use Iterator;
+use Generator;
 
 class EachComponent extends VirtualComponent
 {
     /**
-     * @param array $items
+     * @param array|Iterator|Generator $items
      * @param Closure $closure
      */
-    public function __construct(private array $items, private Closure $closure)
+    public function __construct(private array|Iterator|Generator $items,
+        private Closure $closure)
     {}
 
     /**
@@ -34,6 +34,11 @@ class EachComponent extends VirtualComponent
      */
     public function children(): array
     {
-        return array_map($this->closure, $this->items, array_keys($this->items));
+        $children = [];
+        foreach ($this->items as $key => $item) {
+            $children[] = ($this->closure)($item, $key);
+        }
+
+        return $children;
     }
 }
