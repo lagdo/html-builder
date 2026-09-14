@@ -48,6 +48,11 @@ class HtmlElement extends Element
     /**
      * @var bool
      */
+    private bool $isGhost = false;
+
+    /**
+     * @var bool
+     */
     private bool $isOpened = false;
 
     /**
@@ -224,6 +229,17 @@ class HtmlElement extends Element
     }
 
     /**
+     * @param bool $isGhost
+     *
+     * @return static
+     */
+    public function setGhost(bool $isGhost): static
+    {
+        $this->isGhost = $isGhost;
+        return $this;
+    }
+
+    /**
      * @param bool $isOpened
      *
      * @return void
@@ -338,6 +354,14 @@ class HtmlElement extends Element
     /**
      * @return string
      */
+    private function renderChildren(): string
+    {
+        return implode('', $this->children);
+    }
+
+    /**
+     * @return string
+     */
     private function renderShort(): string
     {
         return sprintf('<%s%s />', $this->tag, $this->renderAttributes());
@@ -356,8 +380,7 @@ class HtmlElement extends Element
      */
     private function renderTag(): string
     {
-        $children = implode('', $this->children);
-        return sprintf('%s%s</%s>', $this->renderOpened(), $children, $this->tag);
+        return sprintf('%s%s</%s>', $this->renderOpened(), $this->renderChildren(), $this->tag);
     }
 
     /**
@@ -377,6 +400,7 @@ class HtmlElement extends Element
     {
         return match(true) {
             $this->isShort => $this->renderShort(),
+            $this->isGhost => $this->renderChildren(),
             $this->isOpened => $this->renderOpened(),
             default => $this->renderTag(),
         };

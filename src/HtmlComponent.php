@@ -78,7 +78,7 @@ class HtmlComponent extends Component
      *
      * @param Engine $engine
      *
-     * @return HtmlComponent
+     * @return static
      */
     public function _e(Engine $engine): static
     {
