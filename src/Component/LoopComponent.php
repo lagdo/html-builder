@@ -39,7 +39,7 @@ class LoopComponent extends VirtualComponent
         $firstLoop = true;
         $loopItem = new LoopItem();
         foreach ($this->items as $key => $item) {
-            // Each item is process one loop later.
+            // Each item is processed one loop later.
             // So the first loop is skipped.
             if ($firstLoop) {
                 $loopItem->key = $key;
