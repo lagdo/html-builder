@@ -3,7 +3,7 @@
 /**
  * HtmlBuilder.php
  *
- * The HTML UI Builder engine.
+ * The HTML Builder engine.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -29,9 +29,6 @@ use Closure;
 use Iterator;
 use Generator;
 
-/**
- * @template C of HtmlComponent = HtmlComponent
- */
 class HtmlBuilder
 {
     /**
@@ -39,14 +36,6 @@ class HtmlBuilder
      */
     protected Engine $engine;
 
-    /**
-     * @var string
-     */
-    protected static string $componentClass = HtmlComponent::class;
-
-    /**
-     * The constructor
-     */
     public function __construct()
     {
         $this->engine = new Engine($this);
@@ -97,51 +86,13 @@ class HtmlBuilder
     }
 
     /**
-     * @template T of C
-     * @param array $arguments
-     * @param string $tagName
-     * @psalm-param class-string<T>|null $class
-     *
-     * @return T
-     */
-    private function newComponent(array $arguments,
-        string $tagName = '', string|null $class = null): mixed
-    {
-        $componentClass = $class ?? static::$componentClass;
-        return (new $componentClass($tagName, $arguments))->_e($this->engine);
-    }
-
-    /**
      * @param string $tagName
      *
-     * @return C
+     * @return HtmlComponent
      */
-    public function tag(string $tagName, ...$arguments): mixed
+    public function tag(string $tagName, ...$arguments): HtmlComponent
     {
-        return $this->newComponent($arguments, tagName: $tagName);
-    }
-
-    /**
-     * @param string $tagName
-     * @param array $arguments
-     *
-     * @return C
-     */
-    public function createComponent(string $tagName, array $arguments = []): mixed
-    {
-        return $this->newComponent($arguments, tagName: $tagName);
-    }
-
-    /**
-     * @template T of C
-     * @psalm-param class-string<T> $class
-     * @param array $arguments
-     *
-     * @return T
-     */
-    protected function createComponentOfClass(string $class, array $arguments = []): mixed
-    {
-        return $this->newComponent($arguments, class: $class);
+        return (new HtmlComponent($tagName, $arguments))->_e($this->engine);
     }
 
     /**

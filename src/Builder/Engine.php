@@ -3,7 +3,7 @@
 /**
  * Engine.php
  *
- * The HTML UI Builder engine.
+ * The HTML Builder engine.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -130,7 +130,7 @@ class Engine
             }
         }
 
-        return $this->builder->createComponent($tagName, $arguments);
+        return $this->builder->tag($tagName, ...$arguments);
     }
 
     /**

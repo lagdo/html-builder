@@ -3,7 +3,7 @@
 /**
  * Scope.php
  *
- * The HTML UI Builder engine.
+ * The HTML Builder scope.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -18,12 +18,9 @@ use Lagdo\HtmlBuilder\Element\Element;
 use Lagdo\HtmlBuilder\Component\VirtualComponent;
 use Lagdo\HtmlBuilder\HtmlComponent;
 
-use function is_a;
 use function implode;
+use function is_a;
 
-/**
- * @template C = HtmlComponent
- */
 class Scope
 {
     /**
@@ -32,7 +29,7 @@ class Scope
     protected array $elements = [];
 
     /**
-     * @var array<Element|C>
+     * @var array<Element|HtmlComponent>
      */
     protected array $children = [];
 
@@ -45,16 +42,17 @@ class Scope
      */
     protected function expand(mixed $component): void
     {
-        if (is_a($component, Element::class) || is_a($component, HtmlComponent::class)) {
-            $this->children[] = $component;
-            return;
-        }
-
-        if (is_a($component, VirtualComponent::class)) {
-            // Recursively expand the children of the virtual components.
-            foreach ($component->children() as $childElement) {
-                $this->expand($childElement);
-            }
+        switch(true) {
+            case is_a($component, Element::class):
+            case is_a($component, HtmlComponent::class):
+                $this->children[] = $component;
+                return;
+            case is_a($component, VirtualComponent::class):
+                // Recursively expand the children of the virtual components.
+                foreach ($component->children() as $childElement) {
+                    $this->expand($childElement);
+                }
+                return;
         }
     }
 
