@@ -3,7 +3,7 @@
 /**
  * LoopComponent.php
  *
- * Virtual UI component for a loop.
+ * Virtual component for a loop.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -15,7 +15,6 @@
 namespace Lagdo\HtmlBuilder\Component;
 
 use Lagdo\HtmlBuilder\Element\Element;
-use Lagdo\HtmlBuilder\LoopItem;
 use Closure;
 use Iterator;
 use Generator;

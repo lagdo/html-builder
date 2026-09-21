@@ -3,7 +3,7 @@
 /**
  * WhenComponent.php
  *
- * Virtual UI component to show a component only if a condition is met.
+ * Virtual component to show a component only if a condition is met.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

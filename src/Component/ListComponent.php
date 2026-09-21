@@ -3,7 +3,7 @@
 /**
  * ListComponent.php
  *
- * Virtual UI component for a list of components.
+ * Virtual component for a list of components.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

@@ -3,7 +3,7 @@
 /**
  * LoopItem.php
  *
- * An item in a LoopComponent UI component loop.
+ * An item in a LoopComponent loop.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -12,7 +12,7 @@
  * @link https://github.com/lagdo/html-builder
  */
 
-namespace Lagdo\HtmlBuilder;
+namespace Lagdo\HtmlBuilder\Component;
 
 use Closure;
 

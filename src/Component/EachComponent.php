@@ -3,7 +3,7 @@
 /**
  * EachComponent.php
  *
- * Virtual UI component for each loop.
+ * Virtual component for each loop.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>

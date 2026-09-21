@@ -3,7 +3,7 @@
 /**
  * PickComponent.php
  *
- * Virtual UI component to pick one components among many.
+ * Virtual component to pick one components among many.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
