@@ -1,0 +1,6 @@
+.project
+.settings/*
+composer.phar
+composer.lock
+vendor/
+.idea/

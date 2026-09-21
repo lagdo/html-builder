@@ -1,0 +1,28 @@
+{
+    "name": "lagdo/ui-builder-html",
+    "type": "library",
+    "description": "A standalone HTML UI builder.",
+    "authors": [
+        {
+            "name": "Thierry Feuzeu",
+            "email": "thierry.feuzeu@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/lagdo/ui-builder-html",
+    "license": "MIT",
+    "keywords": ["HTML", "UI", "Builder"],
+    "support": {
+        "issues": "https://github.com/lagdo/ui-builder-html/issues",
+        "source": "https://github.com/lagdo/ui-builder-html"
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lagdo\\UiBuilder\\Html\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": false
+}
