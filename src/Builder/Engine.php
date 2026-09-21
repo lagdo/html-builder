@@ -5,19 +5,19 @@
  *
  * The HTML UI Builder engine.
  *
- * @package ui-builder-html
+ * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
  * @copyright 2026 Thierry Feuzeu <thierry.feuzeu@gmail.com>
  * @license https://opensource.org/license/mit The MIT License
- * @link https://github.com/lagdo/ui-builder-html
+ * @link https://github.com/lagdo/html-builder
  */
 
-namespace Lagdo\UiBuilder\Html\Builder;
+namespace Lagdo\HtmlBuilder\Builder;
 
-use Lagdo\UiBuilder\Html\Element\Element;
-use Lagdo\UiBuilder\Html\HtmlBuilder;
-use Lagdo\UiBuilder\Html\HtmlComponent;
-use Lagdo\UiBuilder\Html\HtmlElement;
+use Lagdo\HtmlBuilder\Element\Element;
+use Lagdo\HtmlBuilder\HtmlBuilder;
+use Lagdo\HtmlBuilder\HtmlComponent;
+use Lagdo\HtmlBuilder\HtmlElement;
 use Closure;
 use LogicException;
 

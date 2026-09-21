@@ -5,20 +5,20 @@
  *
  * The HTML UI components provided to the Builder engine.
  *
- * @package ui-builder-html
+ * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
  * @copyright 2026 Thierry Feuzeu <thierry.feuzeu@gmail.com>
  * @license https://opensource.org/license/mit The MIT License
- * @link https://github.com/lagdo/ui-builder-html
+ * @link https://github.com/lagdo/html-builder
  */
 
-namespace Lagdo\UiBuilder\Html;
+namespace Lagdo\HtmlBuilder;
 
-use Lagdo\UiBuilder\Html\Builder\Engine;
-use Lagdo\UiBuilder\Html\Element\Element;
-use Lagdo\UiBuilder\Html\Element\Html;
-use Lagdo\UiBuilder\Html\Element\Text;
-use Lagdo\UiBuilder\Html\Component\Component;
+use Lagdo\HtmlBuilder\Builder\Engine;
+use Lagdo\HtmlBuilder\Element\Element;
+use Lagdo\HtmlBuilder\Element\Html;
+use Lagdo\HtmlBuilder\Element\Text;
+use Lagdo\HtmlBuilder\Component\Component;
 use Closure;
 
 use function is_a;

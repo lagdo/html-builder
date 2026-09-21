@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lagdo\UiBuilder\Html\Element;
+namespace Lagdo\HtmlBuilder\Element;
 
 /**
  * Provides text block. No escaping.
