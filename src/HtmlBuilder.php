@@ -26,8 +26,8 @@ use Lagdo\HtmlBuilder\Element\Element;
 use Lagdo\HtmlBuilder\Element\Html;
 use Lagdo\HtmlBuilder\Element\Text;
 use Closure;
-use Iterator;
 use Generator;
+use Iterator;
 
 class HtmlBuilder
 {
@@ -96,17 +96,6 @@ class HtmlBuilder
     }
 
     /**
-     * @param array $values
-     * @param Closure $closure
-     *
-     * @return Component
-     */
-    public function each(array $values, Closure $closure): Component
-    {
-        return new EachComponent($values, $closure);
-    }
-
-    /**
      * @return Component
      */
     public function list(...$arguments): Component
@@ -134,14 +123,25 @@ class HtmlBuilder
     }
 
     /**
-     * @param array|Iterator|Generator $values
+     * @param array|Iterator|Generator $items
      * @param Closure $closure
      *
      * @return Component
      */
-    public function loop(array|Iterator|Generator $values, Closure $closure): Component
+    public function each(array|Iterator|Generator $items, Closure $closure): Component
     {
-        return new LoopComponent($values, $closure);
+        return new EachComponent($items, $closure);
+    }
+
+    /**
+     * @param array|Iterator|Generator $items
+     * @param Closure $closure
+     *
+     * @return Component
+     */
+    public function loop(array|Iterator|Generator $items, Closure $closure): Component
+    {
+        return new LoopComponent($items, $closure);
     }
 
     /**

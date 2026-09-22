@@ -16,8 +16,8 @@ namespace Lagdo\HtmlBuilder\Component;
 
 use Lagdo\HtmlBuilder\Element\Element;
 use Closure;
-use Iterator;
 use Generator;
+use Iterator;
 
 class LoopComponent extends VirtualComponent
 {
