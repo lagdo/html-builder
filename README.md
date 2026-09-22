@@ -158,7 +158,7 @@ return $builder->build(
             fn($menuItem, $loop) => $builder->li($menuItem->title)
                 ->setClass($loop->cycle('item-odd', 'item-even'))
                 ->when(
-                    $loop->changed(fn($item) => $item->group),
+                    $loop->changed(fn($item) => $item?->group ?? ''),
                     fn($menuComponent) => $menuComponent->setClass('item-first')
                 )
         )
