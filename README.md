@@ -80,7 +80,7 @@ return $builder->build(
 ```
 
 The `with()` method calls the provided closure with the component as parameter.
-In the above example, the `formatParagraph()` will receive the `div` component as parameter.
+In the following example, the `formatParagraph()` will receive the `div` component as parameter.
 
 ```php
 function formatParagraph($component)
