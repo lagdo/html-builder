@@ -33,6 +33,14 @@
             "Lagdo\\HtmlBuilder\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "test": [
+            "@clearCache",
+            "@putenv XDEBUG_MODE=coverage",
+            "vendor/bin/phpunit"
+        ],
+        "clearCache": "rm -rf cache/*"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }
