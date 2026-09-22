@@ -18,9 +18,19 @@
     "require": {
         "php": ">=8.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "php-coveralls/php-coveralls": "^2.5",
+        "phpunit/phpcov": "^8.2"
+    },
     "autoload": {
         "psr-4": {
             "Lagdo\\HtmlBuilder\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lagdo\\HtmlBuilder\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

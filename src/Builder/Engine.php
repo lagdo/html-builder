@@ -32,17 +32,18 @@ class Engine
     /**
      * @var array<int, array<string, Closure>>
      */
-    protected $helpers = [
-        HelperTarget::BUILDER->value => [],
-        HelperTarget::ELEMENT->value => [],
-        HelperTarget::COMPONENT->value => [],
-    ];
+    protected array $helpers;
 
     /**
      * @param HtmlBuilder $builder
      */
     public function __construct(protected HtmlBuilder $builder)
     {
+        $this->helpers = [
+            HelperTarget::BUILDER->value => [],
+            HelperTarget::ELEMENT->value => [],
+            HelperTarget::COMPONENT->value => [],
+        ];
         // Register a helper for the element attribute setter.
         $helper = fn(HtmlElement $element, string $tagName, string $method, array $arguments)
             => $element->setAttribute($tagName, $arguments[0] ?? null, $arguments[1] ?? true);
@@ -188,7 +189,6 @@ class Engine
     {
         $scope = new Scope();
         $scope->build($arguments);
-
         return $scope->html();
     }
 }
