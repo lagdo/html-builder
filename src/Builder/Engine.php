@@ -64,7 +64,7 @@ class Engine
     {
         // Do not overwrite existing helpers.
         if (!isset($this->helpers[$target->value][$prefix])) {
-            $this->helpers[$target->value][$prefix] = $helper;
+            $this->helpers[$target->value][$prefix] = [$helper, strlen($prefix) + 1];
         }
 
         return $this;
@@ -122,8 +122,8 @@ class Engine
     public function callBuilderHelper(string $method, array $arguments): HtmlComponent|Element
     {
         $tagName = $this->getTagName($method);
-        foreach($this->helpers[HelperTarget::BUILDER->value] as $prefix => $helper) {
-            $prefixLength = strlen($prefix) + 1;
+        $helpers = $this->helpers[HelperTarget::BUILDER->value];
+        foreach($helpers as $prefix => [$helper, $prefixLength]) {
             if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
                 $tagName = substr($tagName, $prefixLength);
                 return $helper($tagName, $method, $arguments);
@@ -145,8 +145,8 @@ class Engine
         string $method, array $arguments): HtmlElement
     {
         $tagName = $this->getTagName($method);
-        foreach($this->helpers[HelperTarget::ELEMENT->value] as $prefix => $helper) {
-            $prefixLength = strlen($prefix) + 1;
+        $helpers = $this->helpers[HelperTarget::ELEMENT->value];
+        foreach($helpers as $prefix => [$helper, $prefixLength]) {
             if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
                 $tagName = substr($tagName, $prefixLength);
                 return $helper($element, $tagName, $method, $arguments);
@@ -168,8 +168,8 @@ class Engine
         string $method, array $arguments): HtmlComponent
     {
         $tagName = $this->getTagName($method);
-        foreach($this->helpers[HelperTarget::COMPONENT->value] as $prefix => $helper) {
-            $prefixLength = strlen($prefix) + 1;
+        $helpers = $this->helpers[HelperTarget::COMPONENT->value];
+        foreach($helpers as $prefix => [$helper, $prefixLength]) {
             if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
                 $tagName = substr($tagName, $prefixLength);
                 return $helper($component, $tagName, $method, $arguments);
