@@ -2,8 +2,8 @@
 [![StyleCI](https://styleci.io/repos/1262128869/shield?branch=main)](https://styleci.io/repos/1262128869)
 
 [![Latest Stable Version](https://poser.pugx.org/lagdo/html-builder/v/stable)](https://packagist.org/packages/lagdo/html-builder)
-<!--[![Total Downloads](https://poser.pugx.org/lagdo/html-builder/downloads)](https://packagist.org/packages/lagdo/html-builder)-->
 [![License](https://poser.pugx.org/lagdo/html-builder/license)](https://packagist.org/packages/lagdo/html-builder)
+<!--[![Total Downloads](https://poser.pugx.org/lagdo/html-builder/downloads)](https://packagist.org/packages/lagdo/html-builder)-->
 
 A full-featured HTML builder with a fluent api
 ==============================================
@@ -234,7 +234,7 @@ For example, the Jaxon extension for the UI Builder defines the following helper
 $builder->registerBuilderHelper('jxn', builderHelper(...));
 ```
 
-A call to `$builder->jxnHtml($html)` will actually call `builderHelper('html', 'jxnHtml', [$html])`.
+A call to `$builder->jxnHtml($className)` will actually call `builderHelper('html', 'jxnHtml', [$className])`.
 
 ### Contributing
 
