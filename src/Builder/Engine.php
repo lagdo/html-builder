@@ -40,6 +40,7 @@ class Engine implements HelperInterface
             HelperTarget::ELEMENT->value => [],
             HelperTarget::COMPONENT->value => [],
         ];
+
         // Register a helper for the element attribute setter.
         $helper = static fn(HtmlElement $element,
             string $tagName, string $method, array $arguments) => $element
@@ -103,19 +104,6 @@ class Engine implements HelperInterface
     }
 
     /**
-     * @template T of HtmlComponent
-     * @psalm-param class-string<T> $component
-     * @param string $tagName
-     * @param array $arguments
-     *
-     * @return T
-     */
-    public function tag(string $component, string $tagName, array $arguments): HtmlComponent
-    {
-        return new $component($this, $tagName, $arguments);
-    }
-
-    /**
      * @param string $method
      *
      * @return string
@@ -142,7 +130,8 @@ class Engine implements HelperInterface
             }
         }
 
-        return $this->tag(HtmlComponent::class, $tagName, $arguments);
+        // No custom helper defined. Create the HTML tag with the method name.
+        return new HtmlComponent($this, $method, $arguments);
     }
 
     /**

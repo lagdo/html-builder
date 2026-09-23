@@ -68,6 +68,14 @@ trait HtmlTrait
     /**
      * @return HtmlComponent
      */
+    public function b(...$arguments): HtmlComponent
+    {
+        return $this->tag('b', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
     public function nav(...$arguments): HtmlComponent
     {
         return $this->tag('nav', ...$arguments);
@@ -148,14 +156,6 @@ trait HtmlTrait
     /**
      * @return HtmlComponent
      */
-    public function optgroup(...$arguments): HtmlComponent
-    {
-        return $this->tag('optgroup', ...$arguments);
-    }
-
-    /**
-     * @return HtmlComponent
-     */
     public function thead(...$arguments): HtmlComponent
     {
         return $this->tag('thead', ...$arguments);
@@ -215,5 +215,45 @@ trait HtmlTrait
     public function p(...$arguments): HtmlComponent
     {
         return $this->tag('p', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
+    public function form(...$arguments): HtmlComponent
+    {
+        return $this->tag('form', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
+    public function button(...$arguments): HtmlComponent
+    {
+        return $this->tag('button', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
+    public function input(...$arguments): HtmlComponent
+    {
+        return $this->tag('input', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
+    public function select(...$arguments): HtmlComponent
+    {
+        return $this->tag('select', ...$arguments);
+    }
+
+    /**
+     * @return HtmlComponent
+     */
+    public function option(...$arguments): HtmlComponent
+    {
+        return $this->tag('option', ...$arguments);
     }
 }

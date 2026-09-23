@@ -95,7 +95,7 @@ class HtmlBuilder
      */
     public function tag(string $tagName, ...$arguments): HtmlComponent
     {
-        return $this->engine->tag(HtmlComponent::class, $tagName, $arguments);
+        return new HtmlComponent($this->engine, $tagName, $arguments);
     }
 
     /**
