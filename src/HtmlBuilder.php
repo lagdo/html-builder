@@ -15,6 +15,7 @@
 namespace Lagdo\HtmlBuilder;
 
 use Lagdo\HtmlBuilder\Builder\Engine;
+use Lagdo\HtmlBuilder\Builder\HtmlTrait;
 use Lagdo\HtmlBuilder\Component\Component;
 use Lagdo\HtmlBuilder\Component\EachComponent;
 use Lagdo\HtmlBuilder\Component\ListComponent;
@@ -31,6 +32,8 @@ use Iterator;
 
 class HtmlBuilder
 {
+    use HtmlTrait;
+
     /**
      * @var Engine
      */
