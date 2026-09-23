@@ -15,7 +15,6 @@
 namespace Lagdo\HtmlBuilder\Builder;
 
 use Lagdo\HtmlBuilder\Element\Element;
-use Lagdo\HtmlBuilder\HtmlBuilder;
 use Lagdo\HtmlBuilder\HtmlComponent;
 use Lagdo\HtmlBuilder\HtmlElement;
 use Closure;
@@ -27,17 +26,14 @@ use function strncmp;
 use function strtolower;
 use function substr;
 
-class Engine
+class Engine implements HelperInterface
 {
     /**
      * @var array<int, array<string, Closure>>
      */
     protected array $helpers;
 
-    /**
-     * @param HtmlBuilder $builder
-     */
-    public function __construct(protected HtmlBuilder $builder)
+    public function __construct()
     {
         $this->helpers = [
             HelperTarget::BUILDER->value => [],
@@ -45,12 +41,14 @@ class Engine
             HelperTarget::COMPONENT->value => [],
         ];
         // Register a helper for the element attribute setter.
-        $helper = fn(HtmlElement $element, string $tagName, string $method, array $arguments)
-            => $element->setAttribute($tagName, $arguments[0] ?? null, $arguments[1] ?? true);
+        $helper = static fn(HtmlElement $element,
+            string $tagName, string $method, array $arguments) => $element
+                ->setAttribute($tagName, $arguments[0] ?? null, $arguments[1] ?? true);
         $this->registerElementHelper('set', $helper);
         // Register a helper for the component attribute setter.
-        $helper = fn(HtmlComponent $component, string $tagName, string $method, array $arguments)
-            => $component->setAttribute($tagName, $arguments[0] ?? null, $arguments[1] ?? true);
+        $helper = static fn(HtmlComponent $component,
+            string $tagName, string $method, array $arguments) => $component
+                ->setAttribute($tagName, $arguments[0] ?? null, $arguments[1] ?? true);
         $this->registerComponentHelper('set', $helper);
     }
 
@@ -105,6 +103,19 @@ class Engine
     }
 
     /**
+     * @template T of HtmlComponent
+     * @psalm-param class-string<T> $component
+     * @param string $tagName
+     * @param array $arguments
+     *
+     * @return T
+     */
+    public function tag(string $component, string $tagName, array $arguments): HtmlComponent
+    {
+        return new $component($this, $tagName, $arguments);
+    }
+
+    /**
      * @param string $method
      *
      * @return string
@@ -131,7 +142,7 @@ class Engine
             }
         }
 
-        return $this->builder->tag($tagName, ...$arguments);
+        return $this->tag(HtmlComponent::class, $tagName, $arguments);
     }
 
     /**

@@ -14,7 +14,7 @@
 
 namespace Lagdo\HtmlBuilder;
 
-use Lagdo\HtmlBuilder\Builder\Engine;
+use Lagdo\HtmlBuilder\Builder\HelperInterface;
 use Lagdo\HtmlBuilder\Element\Element;
 use Lagdo\HtmlBuilder\Element\Html;
 use Lagdo\HtmlBuilder\Element\Text;
@@ -38,11 +38,6 @@ use function is_string;
 class HtmlComponent extends Component
 {
     /**
-     * @var Engine
-     */
-    public readonly Engine $engine;
-
-    /**
      * @var HtmlElement
      */
     private HtmlElement $element;
@@ -63,27 +58,27 @@ class HtmlComponent extends Component
     protected string $tagName = '';
 
     /**
+     * @param HelperInterface $helper
      * @param string $tagName
      * @param array $arguments
      */
-    public function __construct(string $tagName, array $arguments = [])
+    public function __construct(private HelperInterface $helper,
+        string $tagName, array $arguments = [])
     {
-        $this->element = new HtmlElement($this, $tagName ?: $this->tagName);
+        $this->element = new HtmlElement($helper, $tagName ?: $this->tagName);
         // Resolve arguments
         $this->contents(...$arguments);
     }
 
     /**
-     * Set the engine.
-     *
-     * @param Engine $engine
+     * @param string $method
+     * @param array $arguments
      *
      * @return static
      */
-    public function _e(Engine $engine): static
+    public function __call(string $method, array $arguments): static
     {
-        // $this->engine is readonly, so this method must not be called again.
-        $this->engine = $engine;
+        $this->helper->callComponentHelper($this, $method, $arguments);
         return $this;
     }
 
@@ -156,18 +151,6 @@ class HtmlComponent extends Component
     protected function addHtml(string $html): static
     {
         $this->children[] = new Html($html);
-        return $this;
-    }
-
-    /**
-     * @param string $method
-     * @param array $arguments
-     *
-     * @return static
-     */
-    public function __call(string $method, array $arguments): static
-    {
-        $this->engine->callComponentHelper($this, $method, $arguments);
         return $this;
     }
 

@@ -38,7 +38,7 @@ class HtmlBuilder
 
     public function __construct()
     {
-        $this->engine = new Engine($this);
+        $this->engine = new Engine();
     }
 
     /**
@@ -92,7 +92,7 @@ class HtmlBuilder
      */
     public function tag(string $tagName, ...$arguments): HtmlComponent
     {
-        return (new HtmlComponent($tagName, $arguments))->_e($this->engine);
+        return $this->engine->tag(HtmlComponent::class, $tagName, $arguments);
     }
 
     /**
