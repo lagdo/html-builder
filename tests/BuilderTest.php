@@ -1,6 +1,6 @@
 <?php
 
-namespace Lagdo\HtmlBuilder\Tests\TestBuilder;
+namespace Lagdo\HtmlBuilder\Tests;
 
 use Lagdo\HtmlBuilder\HtmlBuilder;
 use Lagdo\HtmlBuilder\HtmlComponent;
@@ -77,7 +77,8 @@ final class BuilderTest extends TestCase
         $html = $this->builder->build(
             $this->builder->div(
                 $this->builder->text('Welcome'),
-                $this->builder->when($user !== null, fn() => $this->builder->html("&nbsp;{$user->name}"))
+                $this->builder->when($user !== null, fn() =>
+                    $this->builder->html("&nbsp;{$user->name}"))
             )
         );
         $this->assertEquals('<div>Welcome&nbsp;Admin</div>', $html);
@@ -89,9 +90,12 @@ final class BuilderTest extends TestCase
         $html = $this->builder->build(
             $this->builder->div(
                 $this->builder->pick(
-                    $this->builder->when($user === null, fn() => $this->builder->text('Welcome')),
-                    $this->builder->when($user->isAdmin, fn() => $this->builder->html("Welcome&nbsp;<b>{$user->name}</b>")),
-                    $this->builder->when(true, fn() => $this->builder->html("Welcome&nbsp;{$user->name}"))
+                    $this->builder->when($user === null, fn() =>
+                        $this->builder->text('Welcome')),
+                    $this->builder->when($user->isAdmin, fn() =>
+                        $this->builder->html("Welcome&nbsp;<b>{$user->name}</b>")),
+                    $this->builder->when(true, fn() =>
+                        $this->builder->html("Welcome&nbsp;{$user->name}"))
                 )
             )
         );
@@ -107,7 +111,8 @@ final class BuilderTest extends TestCase
         ];
         $html = $this->builder->build(
             $this->builder->ul(
-                $this->builder->each($menuItems, fn($menuItem) => $this->builder->li($menuItem->title))
+                $this->builder->each($menuItems, fn($menuItem) =>
+                    $this->builder->li($menuItem->title))
             )
         );
         $this->assertEquals('<ul><li>First</li><li>Second</li><li>Third</li></ul>', $html);
