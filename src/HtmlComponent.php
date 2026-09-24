@@ -3,7 +3,7 @@
 /**
  * HtmlComponent.php
  *
- * The HTML UI components provided to the Builder engine.
+ * The HTML component provided to the Builder engine.
  *
  * @package html-builder
  * @author Thierry Feuzeu <thierry.feuzeu@gmail.com>
@@ -46,11 +46,6 @@ class HtmlComponent extends Component
      * @var array<Element|Component>
      */
     private array $children = [];
-
-    /**
-     * @var array
-     */
-    protected array $properties = [];
 
     /**
      * @var string
@@ -254,6 +249,15 @@ class HtmlComponent extends Component
     }
 
     /**
+     * @return static
+     */
+    public function disable(): static
+    {
+        $this->element->setAttribute('disabled', 'disabled');
+        return $this;
+    }
+
+    /**
      * @param bool $condition
      * @param Closure $closure
      *
@@ -273,15 +277,6 @@ class HtmlComponent extends Component
     public function with(Closure $closure): static
     {
         $closure($this);
-        return $this;
-    }
-
-    /**
-     * @return static
-     */
-    public function disable(): static
-    {
-        $this->element()->setAttribute('disabled', 'disabled');
         return $this;
     }
 }
