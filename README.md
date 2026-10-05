@@ -91,7 +91,7 @@ function formatParagraph($component)
 
 return $builder->build(
     $builder->div($builder->text('Content'))
-        ->with(formatParagraph(...))
+        ->with(fn($component) => formatParagraph($component))
 );
 ```
 
