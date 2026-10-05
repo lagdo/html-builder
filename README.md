@@ -187,9 +187,9 @@ return $builder->build(
 The HTML Builder can be extended with custom functions.
 
 ```php
-    public function registerBuilderHelper(string $prefix, Closure $helper): void;
-    public function registerElementHelper(string $prefix, Closure $helper): void;
-    public function registerComponentHelper(string $prefix, Closure $helper): void;
+public function registerBuilderHelper(string $prefix, Closure $helper): void;
+public function registerElementHelper(string $prefix, Closure $helper): void;
+public function registerComponentHelper(string $prefix, Closure $helper): void;
 ```
 
 An extension is defined either for the builder itself, or for the [HtmlComponent](https://github.com/lagdo/html-builder/blob/main/src/HtmlComponent.php) or [HtmlElement](https://github.com/lagdo/html-builder/blob/main/src/HtmlElement.php) classes.
@@ -210,6 +210,7 @@ function builderHelper(string $tagName, string $method, array $arguments): Eleme
 {
     // Create and return a component
 }
+$builder->registerBuilderHelper($prefix, builderHelper(...));
 
 /**
   * @throws LogicException
@@ -218,6 +219,7 @@ function elementHelper(HtmlElement $element, string $tagName, string $method, ar
 {
     // Customize and return the $element object.
 }
+$builder->registerElementHelper($prefix, elementHelper(...));
 
 /**
   * @throws LogicException
@@ -226,6 +228,7 @@ function componentHelper(HtmlComponent $component, string $tagName, string $meth
 {
     // Customize and return the $component object.
 }
+$builder->registerComponentHelper($prefix, componentHelper(...));
 ```
 
 In the above functions, `$method` and `$arguments` are the name and parameters in the extension method call, `$tagName` is the method name without the prefix and converted to kebab case, and `$element` and `$component` are the items on which the extension is called.

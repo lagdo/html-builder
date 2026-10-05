@@ -17,6 +17,7 @@ namespace Lagdo\HtmlBuilder\Builder;
 use Lagdo\HtmlBuilder\Element\Element;
 use Lagdo\HtmlBuilder\HtmlComponent;
 use Lagdo\HtmlBuilder\HtmlElement;
+use Lagdo\HtmlBuilder\HtmlBuilder;
 use Closure;
 use LogicException;
 
@@ -114,19 +115,21 @@ class Engine implements HelperInterface
     }
 
     /**
+     * @param HtmlBuilder $builder
      * @param string $method
      * @param array $arguments
      *
      * @return HtmlComponent|Element
      */
-    public function callBuilderHelper(string $method, array $arguments): HtmlComponent|Element
+    public function callBuilderHelper(HtmlBuilder $builder,
+        string $method, array $arguments): HtmlComponent|Element
     {
         $tagName = $this->getTagName($method);
         $helpers = $this->helpers[HelperTarget::BUILDER->value];
         foreach($helpers as $prefix => [$helper, $prefixLength]) {
             if (strncmp($tagName, "$prefix-", $prefixLength) === 0) {
                 $tagName = substr($tagName, $prefixLength);
-                return $helper($tagName, $method, $arguments);
+                return $helper($builder, $tagName, $method, $arguments);
             }
         }
 

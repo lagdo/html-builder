@@ -52,7 +52,7 @@ class HtmlBuilder
      */
     public function __call(string $method, array $arguments): mixed
     {
-        return $this->engine->callBuilderHelper($method, $arguments);
+        return $this->engine->callBuilderHelper($this, $method, $arguments);
     }
 
     /**
