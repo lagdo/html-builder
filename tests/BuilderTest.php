@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lagdo\HtmlBuilder\Tests;
 
 use Lagdo\HtmlBuilder\HtmlBuilder;
@@ -53,7 +55,7 @@ final class BuilderTest extends TestCase
         $important = false;
         $html = $this->builder->build(
             $this->builder->div($this->builder->text('Content'))
-                ->when($important, fn($component) => $component->addClass('important'))
+                ->when($important, static fn($component) => $component->addClass('important'))
         );
         $this->assertEquals('<div>Content</div>', $html);
 
@@ -135,7 +137,7 @@ final class BuilderTest extends TestCase
                         ->setClass($loop->cycle('item-odd', 'item-even'))
                         ->when(
                             $loop->changed(fn($item) => $item?->group ?? ''),
-                            fn($menuComponent) => $menuComponent->setClass('item-group')
+                            static fn($menuComponent) => $menuComponent->setClass('item-group')
                         )
                 )
             )
